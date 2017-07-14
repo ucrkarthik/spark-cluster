@@ -1,0 +1,49 @@
+---
+# Basic setup for all machines
+- hosts: cluster-nodes
+  gather_facts: True
+  vars_files:
+    - vars/vars.yml
+  roles:
+    - basic-config
+    - java-oracle
+    - hadoop-download
+    - spark-download
+    - configure-hdfs-yarn
+
+# Configure/Setup primary node
+- hosts: primary
+  gather_facts: False
+  vars_files:
+    - vars/vars.yml
+  roles:
+    - format-hdfs-namenode
+
+# Cluster startup
+- hosts: primary
+  gather_facts: False
+  vars_files:
+    - vars/vars.yml
+  roles:
+    - start-hdfs-namenode
+    - start-yarn-resourcemanager
+    - start-spark-master
+  tags: start-only
+
+- hosts: cluster-nodes
+  gather_facts: False
+  vars_files:
+    - vars/vars.yml
+  roles:
+    - start-hdfs-datanode
+    - start-yarn-nodemanager
+    - start-spark-worker
+  tags: start-only
+
+## Misc cleanup tasks
+#- hosts: cluster-nodes
+#  gather_facts: False
+#  vars_files:
+#    -vars/vars.yml
+#  roles:
+#    - cleanup

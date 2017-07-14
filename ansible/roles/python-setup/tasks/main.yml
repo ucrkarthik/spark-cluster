@@ -1,0 +1,23 @@
+---
+- name: Download Anaconda from continuum
+  get_url:
+    url: "{{ ANACONDA_DOWNLOAD_URL }}"
+    dest: "~/{{ ANACONDA_BUILD }}"
+
+- name: Create anaconda install directory
+  become: true
+  become_method: sudo
+  file:
+    path: "{{ ANACONDA_INSTALL }}"
+    state: directory
+    mode: 0777
+
+- name: Is anaconda already installed?
+  stat:
+    path: "{{ ANACONDA_INSTALL }}/anaconda/bin/anaconda"
+  register: anaconda
+
+- name: Install anaconda
+  command: "bash ~/{{ ANACONDA_BUILD }} -b -p {{ ANACONDA_INSTALL }}/anaconda"
+  when: anaconda.stat.exists == False
+

@@ -1,0 +1,2 @@
+- name: format hdfs namenode
+  shell: "{{ HDFS_INSTALL }}/bin/hdfs namenode -format -nonInterActive"

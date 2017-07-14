@@ -1,0 +1,5 @@
+---
+- name: Install python packages with pip
+  pip:
+    executable: /opt/continuum/anaconda/bin/pip
+    name: pyhocon

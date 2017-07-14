@@ -1,0 +1,40 @@
+- name: configure /etc/hosts with cluster nodes
+  become: true
+  become_method: sudo
+  lineinfile: 
+    dest: /etc/hosts 
+    line: "{{ hostvars[item].ansible_host }} {{ hostvars[item].ansible_hostname }}" 
+    state: present
+  with_items: "{{ groups['cluster-nodes'] }}"
+
+- name: remove hostname from loopback
+  become: true
+  become_method: sudo
+  lineinfile: 
+    dest: /etc/hosts
+    state: absent
+    regexp: '^127.0.0.1.*{{ ansible_hostname }}.*'
+
+- name: configure environment variables
+  become: true
+  become_method: sudo
+  template: 
+    src: spark-cluster.sh 
+    dest: /etc/profile.d/spark-cluster.sh 
+    owner: root 
+    group: root 
+    mode: 0644
+
+- name: add ssh config file
+  template: 
+    src: config
+    dest: ~/.ssh/config
+    mode: 0600
+
+- name: create install home
+  become: true
+  become_method: sudo
+  file:
+    path: "{{ INSTALL_HOME }}"
+    state: directory
+    mode: 0777

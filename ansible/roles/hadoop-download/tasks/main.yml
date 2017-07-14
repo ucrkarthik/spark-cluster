@@ -1,0 +1,15 @@
+#############################################################################
+# Download
+#############################################################################
+- name: Download hadoop from apache
+  get_url: url={{ HDFS_DOWNLOAD_URL }} dest={{ INSTALL_HOME }}{{ HDFS_ARCHIVE }}
+
+#############################################################################
+# Extract
+#############################################################################
+
+- name: Extract hadoop
+  unarchive: 
+    src={{ INSTALL_HOME }}{{ HDFS_ARCHIVE }} 
+    dest={{ INSTALL_HOME }}
+    copy=no

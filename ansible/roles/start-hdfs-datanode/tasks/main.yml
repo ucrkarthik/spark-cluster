@@ -1,0 +1,2 @@
+- name: start hdfs datanode
+  shell: "{{ HDFS_INSTALL }}/sbin/hadoop-daemon.sh start datanode"

@@ -1,0 +1,2 @@
+- name: start spark worker
+  shell: "{{ SPARK_INSTALL }}/sbin/start-slave.sh {{ hostvars[groups['primary'][0]].ansible_hostname }}:7077"

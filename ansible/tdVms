@@ -1,0 +1,17 @@
+[primary]
+cdh403m1.labs.teradata.com ansible_host=10.25.49.29
+
+[ancillary]
+cdh403d1.labs.teradata.com ansible_host=10.25.48.14
+cdh403d2.labs.teradata.com ansible_host=10.25.48.166
+cdh403d3.labs.teradata.com ansible_host=10.25.48.83
+
+[cluster-nodes:children]
+primary
+ancillary
+
+[cluster-nodes:vars]
+ansible_ssh_user=root
+ansible_private_key_file=~/.ssh/tdgit
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+

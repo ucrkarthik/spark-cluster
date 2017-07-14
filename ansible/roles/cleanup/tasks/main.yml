@@ -1,0 +1,22 @@
+---
+- name: check to see if hadoop was extracted
+  stat:
+    path: "{{ INSTALL_HOME }}{{ HDFS_BUILD }}"
+  register: hadoop
+
+- name: remove hadoop archive
+  file:
+    path: "{{ INSTALL_HOME }}{{ HDFS_ARCHIVE }}"
+    state: absent
+  when: hadoop.stat.isdir is defined and hadoop.stat.isdir
+
+- name: check to see if spark was extracted
+  stat:
+    path: "{{ INSTALL_HOME }}{{ SPARK_BUILD }}"
+  register: spark
+
+- name: remove spark archive
+  file:
+    path: "{{ INSTALL_HOME }}{{ SPARK_ARCHIVE }}"
+    state: absent
+  when: spark.stat.isdir is defined and spark.stat.isdir

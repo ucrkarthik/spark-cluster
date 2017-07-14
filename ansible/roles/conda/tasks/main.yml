@@ -1,0 +1,6 @@
+- name: Install python packages
+  command: "conda install -y {{ item }}"
+  environment:
+      PATH: "{{ ANACONDA_INSTALL }}/anaconda/bin:{{ ansible_env.PATH }}"
+  with_items:
+    - pandas numpy

@@ -1,0 +1,2 @@
+- name: start hdfs namenode
+  shell: "{{ HDFS_INSTALL }}/sbin/hadoop-daemon.sh start namenode"

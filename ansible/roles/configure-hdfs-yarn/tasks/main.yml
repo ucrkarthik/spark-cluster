@@ -1,0 +1,48 @@
+#############################################################################
+# Configuration
+#############################################################################
+
+- name: copy core-site.xml
+  template: 
+    src=core-site.xml 
+    dest={{ HDFS_INSTALL }}/etc/hadoop/core-site.xml
+    mode=0644
+
+# - name: copy hdfs-site.xml
+#   copy: 
+#     src: hdfs-site.xml 
+#     dest: {{ HDFS_INSTALL }}/etc/hadoop/hdfs-site.xml 
+#     owner: vagrant 
+#     group: vagrant 
+#     mode: 0644
+
+- name: copy yarn-site.xml
+  template: 
+    src=yarn-site.xml 
+    dest={{ HDFS_INSTALL }}/etc/hadoop/yarn-site.xml
+    mode=0644
+
+# - name: copy mapred-site.xml
+#   copy: 
+#     src: mapred-site.xml 
+#     dest: {{ HDFS_INSTALL }}/etc/hadoop/mapred-site.xml 
+#     owner: vagrant 
+#     group: vagrant 
+#     mode: 0644
+
+- name: set JAVA_HOME environment variable
+  action: lineinfile 
+    dest={{ HDFS_INSTALL }}/etc/hadoop/hadoop-env.sh 
+    regexp='export JAVA_HOME.*' 
+    line='export JAVA_HOME=/usr/lib/jvm/java-{{ JAVA_VERSION }}-oracle' 
+
+- name: create hdfs data directory
+  file: 
+    path="{{ INSTALL_HOME }}hdfs-files"
+    state=directory 
+    mode=0775
+
+- name: set log level to ERROR
+  lineinfile:
+    dest={{ HDFS_INSTALL }}/etc/hadoop/log4j.properties
+    line="log4j.logger.org.apache.hadoop.util.NativeCodeLoader=ERROR"

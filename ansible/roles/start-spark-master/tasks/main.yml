@@ -1,0 +1,2 @@
+- name: start spark master
+  shell: "{{ SPARK_INSTALL }}/sbin/start-master.sh"

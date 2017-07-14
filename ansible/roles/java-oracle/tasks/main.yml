@@ -1,0 +1,38 @@
+---
+- name: Install add-apt-repostory
+  become: true
+  become_method: sudo
+  apt: name=software-properties-common state=latest update_cache=yes
+
+- name: Add Oracle Java Repository
+  become: true
+  become_method: sudo
+  apt_repository: repo='ppa:webupd8team/java'
+
+- name: Accept Java License part 1
+  become: true
+  become_method: sudo
+  debconf:
+    name="oracle-java{{ JAVA_VERSION }}-installer"
+    question='shared/accepted-oracle-license-v1-1'
+    value='true'
+    vtype='select'
+
+# This requires ansible 2.2
+- name: Acccept Java License part 2
+  become: true
+  become_method: sudo
+  debconf:
+    name="oracle-java{{ JAVA_VERSION }}-installer"
+    question='shared/accepted-oracle-license-v1-1'
+    value='true'
+    vtype='seen'
+
+- name: Install Oracle Java 
+  become: true
+  become_method: sudo
+  apt: name={{item}} state=latest
+  with_items:
+    - oracle-java{{ JAVA_VERSION }}-installer
+    - ca-certificates
+    - oracle-java{{ JAVA_VERSION}}-set-default

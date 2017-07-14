@@ -1,0 +1,24 @@
+---
+- name: Create .jupyter directory
+  file:
+    path: "{{ ansible_env.HOME }}/.jupyter"
+    state: directory
+    mode: 0755
+
+# - name: Create notebook directory
+#   file:
+#     path: "{{ ansible_env.HOME }}/notebooks"
+#     state: directory
+#     mode: 0755
+
+- name: Configuration setting to run notebook
+  copy:
+    src: jupyter_notebook_config.py
+    dest: "{{ ansible_env.HOME }}/.jupyter"
+    mode: 0644
+
+# - name: notebook launch command
+#   copy:
+#     src: notebookServer.sh
+#     dest: "{{ ansible_env.HOME }}/notebooks"
+#     mode: 0744

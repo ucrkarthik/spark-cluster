@@ -1,0 +1,31 @@
+# Basic environment config
+- hosts: cluster-nodes
+  gather_facts: False
+  vars_files:
+    - vars/vars.yml
+  roles:
+    - python-setup
+
+# Conda configuration
+- hosts: cluster-nodes
+  gather_facts: True
+  vars_files:
+    - vars/vars.yml
+  roles:
+    - conda
+
+# Pip configuration
+- hosts: cluster-nodes
+  gather_facts: False
+  vars_files:
+    - vars/vars.yml
+  roles:
+    - pip
+
+# Jupyter Notebook configuration
+- hosts: primary
+  gather_facts: True
+  vars_files:
+    - vars/vars.yml
+  roles:
+    - jupyter

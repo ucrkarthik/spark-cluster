@@ -1,0 +1,11 @@
+---
+- name: Download spark from apache
+  get_url: 
+    url: "{{ SPARK_DOWNLOAD_URL }}" 
+    dest: "{{ INSTALL_HOME }}{{ SPARK_ARCHIVE }}"
+
+- name: Extract spark
+  unarchive: 
+    src: "{{ INSTALL_HOME }}{{ SPARK_ARCHIVE }}"
+    dest: "{{ INSTALL_HOME }}"
+    copy: no

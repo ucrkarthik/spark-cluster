@@ -1,0 +1,8 @@
+{% for host in groups['cluster-nodes'] %}
+Host {{ hostvars[host].ansible_host }} {{ hostvars[host].ansible_hostname }}
+  StrictHostKeyChecking no
+  UserKnownHostsFile=/dev/null
+  User {{ ansible_ssh_user }}
+  IdentityFile ~/.ssh/{{ ansible_private_key_file.split("/")[-1] }}
+
+{% endfor %}

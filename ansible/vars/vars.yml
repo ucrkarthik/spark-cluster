@@ -1,0 +1,24 @@
+SPARK_VERSION: "2.0.1"
+HDFS_MAJOR_VERSION: "2.7"
+HDFS_MINOR_VERSION: ".1"
+JAVA_VERSION: "8"
+
+HDFS_BUILD: "hadoop-{{ HDFS_MAJOR_VERSION }}{{ HDFS_MINOR_VERSION }}"
+SPARK_BUILD: "spark-{{ SPARK_VERSION }}-bin-hadoop{{ HDFS_MAJOR_VERSION }}"
+
+SPARK_ARCHIVE: "{{ SPARK_BUILD }}.tgz"
+HDFS_ARCHIVE: "{{ HDFS_BUILD }}.tar.gz"
+
+APACHE_ARCHIVE_URL: "http://archive.apache.org/dist"
+
+SPARK_DOWNLOAD_URL: "{{ APACHE_ARCHIVE_URL }}/spark/spark-{{ SPARK_VERSION }}/{{ SPARK_ARCHIVE }}"
+HDFS_DOWNLOAD_URL: "{{ APACHE_ARCHIVE_URL }}/hadoop/common/{{ HDFS_BUILD }}/{{ HDFS_ARCHIVE }}"
+
+INSTALL_HOME: "/opt/cluster/"
+HDFS_INSTALL: "{{ INSTALL_HOME }}{{ HDFS_BUILD }}"
+SPARK_INSTALL: "{{ INSTALL_HOME }}{{ SPARK_BUILD }}"
+
+ANACONDA_BUILD: "Anaconda2-4.3.0-Linux-x86_64.sh"
+ANACONDA_DOWNLOAD_URL: "https://repo.continuum.io/archive/{{ ANACONDA_BUILD }}"
+ANACONDA_INSTALL: "/opt/continuum"
+
